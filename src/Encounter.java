@@ -124,7 +124,7 @@ public class Encounter {
       if(eHP<=0) 
       {
          loopStopper = 1; // checks if player won
-         logMessage("--------------------------------------------------------------------------", 0);
+         logMessage("-------------------------------------------------------------------------", 0);
          logMessage("the player won!", loopStopper);
          eHP=eMaxHp;
          pHP=p.getMaxHp();
@@ -133,7 +133,7 @@ public class Encounter {
          if(pHP<=0) // if not: checks if player lost
          { 
             loopStopper = -1;
-            logMessage("--------------------------------------------------------------------------", 0);
+            logMessage("-------------------------------------------------------------------------", 0);
             logMessage("the enemy won...", loopStopper);
             eHP=eMaxHp;
             pHP=p.getMaxHp();
@@ -168,7 +168,16 @@ public class Encounter {
       frame.setLayout(null);
       // player and enemy pictures
       // how will i change pictures according to class and enemy? UHHH idk.... thats for future omri!
-      ImageIcon playerIcon = new ImageIcon("lib/player_temp.png");
+      String klass = p.getKlass();
+      ImageIcon playerIcon;
+      switch (klass) {
+         case "Warrior"-> playerIcon = new ImageIcon("lib/player_warrior.png");
+         case "Ranger" -> playerIcon = new ImageIcon("lib/player_ranger.png");
+         case "Wizard" -> playerIcon = new ImageIcon("lib/player_wizard.png");
+         default -> {
+            playerIcon = new ImageIcon("lib/player_temp.png");
+         }
+      }
       JLabel playerPic = new JLabel(playerIcon); playerPic.setBounds(30,50,180,300);
       frame.add(playerPic); playerPic.setVisible(true);
       ImageIcon enemyIcon = new ImageIcon("lib/enemy_temp.png");
@@ -176,7 +185,6 @@ public class Encounter {
       frame.add(enemyPic); enemyPic.setVisible(true);
 
       // ===== titles
-      
       JLabel pName = new JLabel("<html><div style='text-align:center;'>" + app.getPlayer().getName() + "</div></html>");
       JLabel eName = new JLabel("<html><div style='text-align:center;'>" + en.getName() + "</div></html>");
       pName.setBounds(35, 20, 180, 30);

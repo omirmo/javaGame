@@ -51,6 +51,7 @@ public class CharacterCreation{
       {
          chosenClass="Warrior";
          choseC.setText("Chosen: Warrior");
+         // set equipment as 1,0,0,0,0 for- weapon, + 4 armour pieces
       });
       ranger.addActionListener(e -> 
       {

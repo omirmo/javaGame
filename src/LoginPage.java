@@ -84,14 +84,14 @@ public class LoginPage {
             if(userID!=-1){
                 System.out.println("user found! id:" + userID);
                 app.setID(userID);
-                Player p = new Player(app, userID);
-                app.setPlayer(p);
                 int entryExists = app.getDB().doesEntryExist("playerStats",userID);
                 if(entryExists != -1){
                     // there is NO entry is the players: go to character creation, where all tables would be filled accordingly
                     if(entryExists==0) app.moveTo("CharacterCreation"); 
                     else{
                         // there IS an entry, therefore go to the location 
+                        Player p = new Player(app, userID);
+                        app.setPlayer(p);
                         String loc = (String)app.getDB().getEntryField(userID, "playerStats", "location");
                         System.out.println("moving to " + loc +"!");
                         app.moveTo(loc);

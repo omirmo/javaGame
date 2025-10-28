@@ -41,6 +41,8 @@ public class manageDB {
                 String newMasteriesSQL =      "INSERT INTO playerMasteries (id,swords,daggers,axes,bows,crossbows,firearms,tomes,staves,wands) VALUES(?,?,?,?,?,?,?,?,?,?)";
                 String newExpSQL =            "INSERT INTO playerExperience (id,hp,swords,daggers,axes,bows,crossbows,firearms,tomes,staves,wands) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
                 String newExpToNextLevelSQL = "INSERT INTO expToNextLevel (id,hp,swords,daggers,axes,bows,crossbows,firearms,tomes,staves,wands) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+                String newPlayerEquipment = "INSERT INTO EquippedItems (id,weapon,helmet,chestplate,leggings,boots) VALUES(?,?,?,?,?,?)";
+                
                 System.out.println("SQL statements created");
                 // playerStats:
                 try(PreparedStatement playerSql = conn.prepareStatement(newPlayerSql)) {
@@ -89,7 +91,26 @@ public class manageDB {
                 } catch (SQLException e) {
                     System.out.println("error when creating a nextLvl list: \n" + e.getMessage());
                     return false;
-                }    
+                }
+                try(PreparedStatement equipmentSQL = conn.prepareStatement(newMasteriesSQL)) {
+                    if(data[3] instanceof String string){  // VSC "AI" helped changed it to a cool switch (the quick fix suggestions)
+                        switch (string) {
+                            case "Warrior" -> equipmentSQL.setInt(2, 1);
+                            case "Ranger" -> equipmentSQL.setInt(2, 4);
+                            case "Wizard" -> equipmentSQL.setInt(2, 7);
+                            default -> {
+                            }
+                        }
+                        equipmentSQL.setInt(3, 0);
+                        equipmentSQL.setInt(4, 0);
+                        equipmentSQL.setInt(5, 0);
+                        equipmentSQL.setInt(6, 0);
+                    }
+                    if(equipmentSQL.executeUpdate()!=0) System.out.println("New masteries added.");
+                } catch (SQLException e) {
+                    System.out.println("error when creating masteries list: \n" + e.getMessage());
+                    return false;
+                }        
                 return true;
             }
 

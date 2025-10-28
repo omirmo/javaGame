@@ -19,6 +19,8 @@ public class Player {
     expToNextLevel - same as experience (id, and then 10 fields)
     */
 
+
+    //#region all constructors
     public Player(App app, int id){
         // a constructor which will make a player based on the ID only, basically getting it from the DB:
         this.id=id;
@@ -57,7 +59,9 @@ public class Player {
         experience=(ArrayList)data[6];
         expToNextLevel=(ArrayList)data[7];   
     }
+    //#endregion
 
+    
     public void updatePlayerDB(){ // NEED TO DO
 
     }
@@ -323,7 +327,6 @@ public class Player {
         //[0 hp, 1 def, 2 dex, 3 agi, 4 acc, 5 str, 6 atkSpd]
     }
 
-
     public String getLoc(){
         return loc;
     }
@@ -336,9 +339,12 @@ public class Player {
     public String getName(){
         return (String)app.getDB().getEntryField(id, "users", "username");
     }
-   public int getMaxHp(){
+    public int getMaxHp(){
         return maxHP;
    }
-
+    
+    public String getKlass(){
+        return clas;
+    }
 
 }

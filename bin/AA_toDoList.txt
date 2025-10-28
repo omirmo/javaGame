@@ -1,0 +1,2 @@
+dont forget to add equipment to the character creation page
+give the according weapon and also make all other stuffs id=0 (nothing)
