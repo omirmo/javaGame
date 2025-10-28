@@ -3,7 +3,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
-
 public class CharacterCreation{
    //fields
    private String chosenClass;
