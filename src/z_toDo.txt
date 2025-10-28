@@ -1,0 +1,21 @@
+to do:
+
+signup- V
+login- V
+login checks character creation- V
+loading into location - V
+
+inventory- add the option to add an item to the player
+
+inventory and equipped popup page - 
+
+combat - 
+encounter is i guess "done"
+need a way to extract enemy stats (data) from the DB in the same exact format like player
+might need to change the DB accordingly.... oh god plz no
+
+
+
+
+issues- 
+trying to log in with wrong password doesnt work... skips into character creation
