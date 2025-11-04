@@ -114,12 +114,11 @@ public class manageDB {
                 return true;
             }
             case "Inventory" -> {
-                // Inventory - id(userID), item(itemID), equipment(1 yes / 0 no)
-                String sql = "INSERT INTO " + tableName + "(id,item,equipment) VALUES(?,?,?)";
+                // Inventory - id(userID), item(itemID)
+                String sql = "INSERT INTO " + tableName + "(id,item) VALUES(?,?)";
                 try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
                     pstmt.setString(1, (String)data[0]);
                     pstmt.setString(2, (String)data[1]);
-                    pstmt.setString(3, (String)data[2]);
                     pstmt.executeUpdate();
                     System.out.println("New item added to the player's inventory");
                     return true;

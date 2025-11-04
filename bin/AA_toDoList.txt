@@ -37,3 +37,21 @@ armourer- sells armor
 
 
 
+ok wait
+DELETED the items table
+CHANGED equipped items table
+CHANGED equipment table 
+CHANGED inventory table | since all items now will be equipment and money, no need to keep track of every item if its equipment or not   
+
+wait so how will i handle loot tier?
+saving IDs 1 - X and X+1 - Y would pose an issue if i want to add more than X items to a tier
+so i will have to either add to them a tier
+which also helps the player understand how valuable it is!
+ok i think thats a good one
+should i add value?
+nah. the equipment would be unlockable, locked in ur inventory
+
+
+
+
+
