@@ -3,15 +3,15 @@ import java.util.ArrayList;
 
 public class Player {
     // fields:
-    private App app;
+    private final App app;
     private final int id;
     private final String clas; // player class
     private int maxHP;
-    private int hp;
+    private final int hp;
     private String loc; // location
-    private ArrayList<Integer> masteries;
-    private ArrayList<Integer> experience;
-    private ArrayList<Integer> expToNextLevel;
+    private final ArrayList<Integer> masteries;
+    private final ArrayList<Integer> experience;
+    private final ArrayList<Integer> expToNextLevel;
     
     /* arraylist order: 
     masteries- id, swords, daggers, axes, bows, crossbows, firearms, tomes, staves, wands (id, and then 9 fields)

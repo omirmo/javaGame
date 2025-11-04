@@ -3,17 +3,18 @@ import java.util.Random;
 import javax.swing.*;
 
 
-public class Forest {
+public class Mountain {
    private int loopStopper;
    private App app;
 
-   public Forest(App ap){
+   public Mountain(App ap){
       app = ap;
-      System.out.println("we are in the Forest now!");
+      System.out.println("we are in the forest now!");
       loopStopper=0;
 
       Image bg = new ImageIcon("lib/forest_background.png").getImage();
-      JPanel panel = new JPanel() {
+      JPanel panel = new JPanel() 
+      {
          @Override
          protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -26,20 +27,29 @@ public class Forest {
       title.setBounds(100,50,700,50); panel.add(title); title.setVisible(true);
       title.setFont(new Font("Arial", Font.BOLD, 36));
       
-      JButton travelVillage = new JButton("<html><div style='text-align:center;'>TRAVEL TO<br>VILLAGE</div></html>"); 
-      travelVillage.setBounds(30,530,90,50); panel.add(travelVillage); travelVillage.setVisible(true);
-      travelVillage.setMargin(new Insets(2, 3, 2, 3));
-      travelVillage.addActionListener(e -> moveTo("Village", app));
+      JButton travelForest = new JButton("<html><div style='text-align:center;'>TRAVEL TO<br>FOREST</div></html>"); 
+      travelForest.setBounds(30,530,90,50); panel.add(travelForest); travelForest.setVisible(true);
+      travelForest.setMargin(new Insets(2, 3, 2, 3));
+      travelForest.addActionListener(e -> moveTo("Forest", app));
       
-      JButton travelMountain= new JButton("<html><div style='text-align:center;'>TRAVEL TO<br>MOUNTAINS</div></html>"); 
-      travelMountain.setBounds(1060,530,90,50);panel.add(travelMountain);travelMountain.setVisible(true);
-      travelMountain.setMargin(new Insets(2, 3, 2, 3));
-      travelMountain.addActionListener(e -> moveTo("Mountain", app));
+      // JButton travelMountain= new JButton("<html><div style='text-align:center;'>TRAVEL TO<br>MOUNTAINS</div></html>"); 
+      // travelMountain.setBounds(1060,530,90,50);panel.add(travelMountain);travelMountain.setVisible(true);
+      // travelMountain.setMargin(new Insets(2, 3, 2, 3));
+      // travelMountain.addActionListener(e -> moveTo("Mountain", app));
       
-      JButton explore= new JButton("<html><div style='text-align:center;'>EXPLORE<br></div></html>"); 
-      explore.setBounds(513,313,70,30);panel.add(explore);explore.setVisible(true);
-      explore.setMargin(new Insets(2, 2, 2, 2));
-      explore.addActionListener(e -> explore(app, explore));
+      // JButton explore= new JButton("<html><div style='text-align:center;'>EXPLORE<br></div></html>"); 
+      // explore.setBounds(513,313,70,30);panel.add(explore);explore.setVisible(true);
+      // explore.setMargin(new Insets(2, 2, 2, 2));
+      // explore.addActionListener(e -> explore(app, explore));
+      
+      
+      
+      
+      
+      
+      
+      
+      
       
       
       app.changePanel(panel);
@@ -53,7 +63,7 @@ public class Forest {
    }
 
    public void explore(App app, JButton btn){
-      
+      // same action as the forest explore function, SHOULD WORK just need to change enemy ID etc
       System.out.println("started exploring");
       if(loopStopper==0){ 
          // if its 0 (turned off) then make it 1 and turn the thread on, if its already at 1 then make it 0 (turn it off)
@@ -75,17 +85,6 @@ public class Forest {
                   if(rndNum%2 ==0){
                      System.out.println("enemy boss! 1 in 50!");
                      // forest boss - enemy ID 6
-                     Enemy tempBoss = app.getDB().getEnemyByID(6);
-                     System.out.println("enemy ID:6 - " + tempBoss.getName());
-                     System.out.println("STARTING FIGHT:");
-                     Encounter a = new Encounter(app, app.getPlayer(), tempBoss);
-                     int won = a.combatStart();
-                     if(won==1){
-                        System.out.println("in the forst, you won! against the boss!");
-                     }
-                     else {
-                        System.out.println("in the forst, you lost.... LOSER but its okay its against the boss after all");
-                     }
                   }
                   else{
                      System.out.println("legendary item! 1 in 50!");

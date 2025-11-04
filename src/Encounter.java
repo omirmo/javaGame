@@ -75,7 +75,7 @@ public class Encounter {
                eHpBarFiller.setBounds(575, 350, (int)(168*percent) , 20);
                whoDed();
             }  
-         } catch (Exception e) {
+         } catch (InterruptedException e) {
             System.out.println("error in player thread");
          }
       });
@@ -114,7 +114,7 @@ public class Encounter {
                pHpBarFiller.setBounds(36, 350, (int)(168*percent) , 20);
                whoDed();
             }  
-         } catch (Exception e) {
+         } catch (InterruptedException e) {
             System.out.println("error in enemy thread");
          }
       });
@@ -149,7 +149,7 @@ public class Encounter {
       try {
          pThread.join();
          eThread.join();
-      } catch (Exception e) {
+      } catch (InterruptedException e) {
          System.out.println("error with joining threads");
       }
 
@@ -270,21 +270,15 @@ public class Encounter {
       StyledDocument doc = combatLog.getStyledDocument();
       SimpleAttributeSet attr = new SimpleAttributeSet();
       switch (attacker) {
-         case 1:
-            StyleConstants.setForeground(attr, Color.BLUE);
-            break;
-         case -1:
-            StyleConstants.setForeground(attr, Color.RED);
-            break;
-         default:
-            StyleConstants.setForeground(attr, Color.BLACK);
-            break;
+         case 1 -> StyleConstants.setForeground(attr, Color.BLUE);
+         case -1 -> StyleConstants.setForeground(attr, Color.RED);
+         default -> StyleConstants.setForeground(attr, Color.BLACK);
       }
       try {
          doc.insertString(doc.getLength(), message + "\n", attr);
          combatLog.setCaretPosition(doc.getLength());
       } catch (BadLocationException e) {
-         e.printStackTrace();
+         System.out.println("error... somewhere in encounter");
       }
    }
 } // 168 x 300

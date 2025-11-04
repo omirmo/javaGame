@@ -1,2 +1,39 @@
-dont forget to add equipment to the character creation page
-give the according weapon and also make all other stuffs id=0 (nothing)
+
+
+MOST IMPORTANT 
+in any "moveTo" function i need to remove the menuBar and then add it back
+make sure that in the login and characterCreation pages i am NOT adding it
+therefore the user will not be able to logout before signed into the game
+
+
+
+current stuff to do later-
+
+1. add rewards for enemy encounters (exp and loot)
+2. add levelup
+3. actually make the town 
+4. add inventory system
+
+actually inventory would go before loot giving?
+
+
+encounter-
+give exp and reward, update current HP according to the end of the battle
+add background
+
+
+
+town-
+temple- heals you for a fee off 2 coins per 1hp
+equipment shop- sells various equipments to the inventory
+armourer- sells armor
+
+
+
+
+// need to oil the space bar, it squeeks
+
+
+
+
+

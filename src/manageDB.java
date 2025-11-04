@@ -41,7 +41,7 @@ public class manageDB {
                 String newMasteriesSQL =      "INSERT INTO playerMasteries (id,swords,daggers,axes,bows,crossbows,firearms,tomes,staves,wands) VALUES(?,?,?,?,?,?,?,?,?,?)";
                 String newExpSQL =            "INSERT INTO playerExperience (id,hp,swords,daggers,axes,bows,crossbows,firearms,tomes,staves,wands) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
                 String newExpToNextLevelSQL = "INSERT INTO expToNextLevel (id,hp,swords,daggers,axes,bows,crossbows,firearms,tomes,staves,wands) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-                String newPlayerEquipment = "INSERT INTO EquippedItems (id,weapon,helmet,chestplate,leggings,boots) VALUES(?,?,?,?,?,?)";
+                //String newPlayerEquipment = "INSERT INTO EquippedItems (id,weapon,helmet,chestplate,leggings,boots) VALUES(?,?,?,?,?,?)";
                 
                 System.out.println("SQL statements created");
                 // playerStats:
@@ -113,7 +113,22 @@ public class manageDB {
                 }        
                 return true;
             }
-
+            case "Inventory" -> {
+                // Inventory - id(userID), item(itemID), equipment(1 yes / 0 no)
+                String sql = "INSERT INTO " + tableName + "(id,item,equipment) VALUES(?,?,?)";
+                try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                    pstmt.setString(1, (String)data[0]);
+                    pstmt.setString(2, (String)data[1]);
+                    pstmt.setString(3, (String)data[2]);
+                    pstmt.executeUpdate();
+                    System.out.println("New item added to the player's inventory");
+                    return true;
+                } 
+                catch (SQLException e) {
+                    System.out.println("error when giving player an item: \n" + e.getMessage());
+                    return false;
+                }
+            }
             case "enemies" -> { // MAKE LATER
             }
             default -> {return false;} //if tablename != any possible case
