@@ -6,14 +6,15 @@ import javax.swing.*;
 public class CharacterCreation{
    //fields
    private String chosenClass;
-
+   public ImageIcon playerIcon;
+   
    // app.getID will allow us to find the ID of the user to signed into their account, very helpful
    public CharacterCreation(App app){
       chosenClass="";
       
-     Image bg = new ImageIcon("lib/character_background.png").getImage();
-      JPanel panel = new JPanel() 
-      {
+      //#region
+      Image bg = new ImageIcon("lib/character_background.png").getImage();
+      JPanel panel = new JPanel() {
          @Override
          protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -34,6 +35,7 @@ public class CharacterCreation{
                                                     Rangers are sneaky and evasive, choosing to attack from a little further away
                                      Wizard- They cast thier spells using tomes, staves and wands.
                                                     Wizard are choosing to cast massive strong spells to obliterate thier enemies
+                                     
                                      - choosing a class grants you 25% mastery exp boost for the class's prefered weapons.
                                      - it does not lock you away from using other weapons""");
       info.setBounds(130,140,470,140);
@@ -45,22 +47,31 @@ public class CharacterCreation{
       JButton warrior = new JButton("WARRIOR"); warrior.setBounds(130,320,100,30); panel.add(warrior); warrior.setVisible(true);
       JButton ranger =  new JButton("RANGER");  ranger.setBounds(250,320,100,30);  panel.add(ranger);  ranger.setVisible(true);
       JButton wizard =    new JButton("WIZARD");    wizard.setBounds(370,320,100,30);    panel.add(wizard);    wizard.setVisible(true);
+      //#endregion
+
+      playerIcon = new ImageIcon("lib/player_warrior.png");
+      
+      JLabel playerPic = new JLabel(playerIcon); 
+      playerPic.setBounds(800,50,180,300);
+      panel.add(playerPic); 
+      playerPic.setVisible(true);
+
 
       JLabel choseC = new JLabel("Chosen: " + chosenClass); choseC.setBounds(250, 350, 150, 30); panel.add(choseC); choseC.setVisible(true);
-      warrior.addActionListener(e -> 
-      {
+      warrior.addActionListener(e -> {
          chosenClass="Warrior";
+         playerIcon = new ImageIcon("lib/player_warrior.png");
          choseC.setText("Chosen: Warrior");
          // set equipment as 1,0,0,0,0 for- weapon, + 4 armour pieces
       });
-      ranger.addActionListener(e -> 
-      {
+      ranger.addActionListener(e -> {
          chosenClass="Ranger";
+         playerIcon = new ImageIcon("lib/player_ranger.png");
          choseC.setText("Chosen: Ranger");
       });
-      wizard.addActionListener(e -> 
-      {
+      wizard.addActionListener(e -> {
          chosenClass="Wizard";
+         playerIcon = new ImageIcon("lib/player_wizard.png");
          choseC.setText("Chosen: Wizard");
       });
 

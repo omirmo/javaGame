@@ -39,9 +39,11 @@ armourer- sells armor
 
 ok wait
 DELETED the items table
-CHANGED equipped items table
+CHANGED EquippedItems table
 CHANGED equipment table 
 CHANGED inventory table | since all items now will be equipment and money, no need to keep track of every item if its equipment or not   
+
+
 
 wait so how will i handle loot tier?
 saving IDs 1 - X and X+1 - Y would pose an issue if i want to add more than X items to a tier
