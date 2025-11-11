@@ -304,20 +304,19 @@ public class Player {
         String weaponused = getWeaponTypeUsed();
         ArrayList<Object> equipeditems = app.getDB().getEntry(id, "EquippedItems");
         res.set(0,(double)hp);
-        for(int i=0; i< equipeditems.size(); i++){
-            if(i!=0){ 
-                //skipping first field because its the player ID
-                int itemID = (int)equipeditems.get(i);
-                if(itemID !=0){ 
-                    ArrayList<Object> itemStats = app.getDB().getEntry(itemID, "equipment"); 
-                    //order: 0id, 1type, 2str, 3spd, 4acc, 5def, 6dex, 7agi
-                    res.set(1,(double)(int)itemStats.get(5)+res.get(1)); //def
-                    res.set(2,(double)(int)itemStats.get(6)+res.get(2)); //dex
-                    res.set(3,(double)(int)itemStats.get(7)+res.get(3)); //agi
-                    res.set(4,(double)(int)itemStats.get(4)+res.get(4)); //acc
-                    res.set(5,(double)(int)itemStats.get(2)+res.get(5)); //str
-                    res.set(6,(double)itemStats.get(3)+res.get(6));      //atkSpd
-                }
+        for(int i=1; i< equipeditems.size(); i++){
+            //skipping first field because its the player ID
+            int itemID = (int)equipeditems.get(i);
+            System.out.println("current item is: " + itemID);
+            if(itemID !=0 && i!=6){ 
+                
+                ArrayList<Object> itemStats = app.getDB().getEntry(itemID, "equipment"); 
+                //order: 0id, 1type, 2str, 3spd, 4acc, 5def, 6dex, 7agi
+                res.set(1,(double)((int)itemStats.get(5)+res.get(1))); //def
+                res.set(2,(double)((int)itemStats.get(6)+res.get(2))); //dex                    res.set(3,(double)((int)itemStats.get(7)+res.get(3))); //agi
+                res.set(4,(double)((int)itemStats.get(4)+res.get(4))); //acc
+                res.set(5,(double)((int)itemStats.get(2)+res.get(5))); //str
+                res.set(6,(double)itemStats.get(3)+res.get(6));      //atkSpd
             }
         } 
         res.set(2,getDexStat(weaponused)+res.get(2)); //dex
