@@ -143,17 +143,28 @@ public class Player {
 
         // check levelup-
         int expGap=experience.get(index)-expToNextLevel.get(index);
-        if(expGap>=0){
-            // indeed a levelup
+        if(expGap>=0){ //if there is MORE exp than needed to lvl up
             experience.set(index,expGap);
             expToNextLevel.set(index, (int)(expToNextLevel.get(index)*1.6));
             if(index==0) { // hp levelup
                 maxHP=maxHP+5;
+                System.out.println("===================HP levelup!");
             }
             else{ // weapon mastery levelup
                 masteries.set(index,masteries.get(index)+1);
+                System.out.println("===================weapon levelup!");
             }
         }
+        if(index==0){
+            app.getDB().updateFieldByID(id, "playerStats", "maxHP", String.valueOf(maxHP));
+            System.out.println("levelup HP EXECUTED");
+            app.getDB().updateFieldByID(id, "playerExperiece", "hp", String.valueOf(experience.get(index)));
+            app.getDB().updateFieldByID(id, "expToNextLevel", "hp", String.valueOf(expToNextLevel.get(index)));
+            System.out.println("levelup HP FINISHED");
+        }
+        app.getDB().updateFieldByID(id, "playerMasteries", getWeaponTypeUsed(), String.valueOf(masteries.get(index)));
+        app.getDB().updateFieldByID(id, "playerExperiece", getWeaponTypeUsed(), String.valueOf(experience.get(index)));
+        app.getDB().updateFieldByID(id, "expToNextLevel", getWeaponTypeUsed(), String.valueOf(expToNextLevel.get(index)));
         return true;
     }
 
@@ -345,5 +356,7 @@ public class Player {
     public String getKlass(){
         return clas;
     }
+
+   
 
 }

@@ -17,8 +17,11 @@ public class Encounter {
    private JPanel eHpBarFiller;
    private final Player p;
    private int eMaxHp;
+   private int weaponExpCounter=0;
+   private int hpExpCounter=0;
 
    public Encounter(App ap, Player player, Enemy enemy) {
+      //region all of combat
       app = ap;
       en = enemy;
       p = player;
@@ -39,6 +42,7 @@ public class Encounter {
       pDef = playerStats.get(1); pDex = playerStats.get(2); pAgi = playerStats.get(3); pAcc = playerStats.get(4); pStr = playerStats.get(5); pAtkSpd = playerStats.get(6);
       eDef = enemyStats.get(1);  eDex = enemyStats.get(2);  eAgi = enemyStats.get(3);  eAcc = enemyStats.get(4);  eStr = enemyStats.get(5);  eAtkSpd = enemyStats.get(6);
       
+
       pThread = new Thread(() -> {
          try {
             Random rndPlayer = new Random();
@@ -52,16 +56,15 @@ public class Encounter {
                if(rndNum>pAcc){ // PLAYER DID NOT MISS
                   rndNum= rndPlayer.nextInt(100)+1;
                   if(rndNum<eAgi){ // example: agi is 3%, rng hits 2, so 2 < 3 therefore the rare 3% chance happened and he evaded
-                     System.out.println("Enemy dodged the attack!");
                   }
                   else{
                      // PLAYER HITS TARGET - NOT EVADED
                      rndNum= rndPlayer.nextInt(100)+1;
-                     System.out.println("landed a hit on the enemy!");
                      double dmg = pStr-eDef;
+                     weaponExpCounter+=rndPlayer.nextInt((int)pStr-5,(int)pStr+5);
                      if(rndNum<pDex){ // same logic as agility
-                        System.out.print(" | and got a critical hit!");
                         dmg = (pStr*1.5)-eDef;
+                        weaponExpCounter+=rndPlayer.nextInt((int)pStr-5,(int)pStr+5);
                      }
                      if(dmg>0 || dmg<=0){ // ATTACK NOT GUARDED - damage above 0
                         eHP = (eHP - (int)dmg);
@@ -92,15 +95,14 @@ public class Encounter {
                if(rndNum>eAcc){
                   rndNum= rndEnemy.nextInt(100)+1;
                   if(rndNum<pAgi){
-                     System.out.println("Player dodged the attack!");
                   }
                   else{
                      rndNum= rndEnemy.nextInt(100)+1;
-                     System.out.println("landed a hit on the player!");
                      double dmg = eStr-pDef;
+                     hpExpCounter+=rndEnemy.nextInt((int)pStr-5,(int)pStr+5);
                      if(rndNum<eDex){
-                        System.out.print(" | and got a critical hit!");
                         dmg = (eStr*1.5)-pDef;
+                        hpExpCounter+=rndEnemy.nextInt((int)pStr-5,(int)pStr+5);
                      }
                      if(dmg>0 || dmg<=0){
                         pHP = (pHP - (int)dmg);
@@ -118,6 +120,7 @@ public class Encounter {
             System.out.println("error in enemy thread");
          }
       });
+      //endregion
    }
 
    public synchronized void whoDed(){
@@ -126,8 +129,11 @@ public class Encounter {
          loopStopper = 1; // checks if player won
          logMessage("-------------------------------------------------------------------------", 0);
          logMessage("the player won!", loopStopper);
-         eHP=eMaxHp;
+         eHP=0;
          pHP=p.getMaxHp();
+         p.addExp("hp", hpExpCounter);
+         p.addExp(p.getWeaponTypeUsed(), weaponExpCounter);
+
       }
       else {
          if(pHP<=0) // if not: checks if player lost
@@ -153,8 +159,8 @@ public class Encounter {
          System.out.println("error with joining threads");
       }
 
-      if(loopStopper==1) {System.out.println("player wins remaining HP-" + pHP);}
-      if(loopStopper==-1) {System.out.println("enemy wins remaining HP-" + eHP);}
+      if(loopStopper==1) {System.out.println("player wins remaining HP-   " + pHP);}
+      if(loopStopper==-1) {System.out.println("enemy wins remaining HP-   " + eHP);}
       return loopStopper; // my 1 or -1 which is being updates with every iteration of each thread
    }
 
@@ -278,7 +284,7 @@ public class Encounter {
          doc.insertString(doc.getLength(), message + "\n", attr);
          combatLog.setCaretPosition(doc.getLength());
       } catch (BadLocationException e) {
-         System.out.println("error... somewhere in encounter");
+         System.out.println("error logging message into combatLog");
       }
    }
 } // 168 x 300

@@ -261,7 +261,7 @@ public class manageDB {
      * @param tableName name of the table
      * @param data the data which will be updated into, deleting the old data
      */
-    public void updateFieldByID(int playerId, String fieldName, String tableName, String data) {
+    public void updateFieldByID(int playerId, String tableName, String fieldName, String data) {
         String sql = "UPDATE " + tableName +" SET " + fieldName + " = ? WHERE id = ?";
         try (PreparedStatement editTable = conn.prepareStatement(sql)) {
             editTable.setString(1, data);

@@ -1,5 +1,3 @@
-
-
 MOST IMPORTANT 
 in any "moveTo" function i need to remove the menuBar and then add it back
 make sure that in the login and characterCreation pages i am NOT adding it
@@ -9,12 +7,12 @@ therefore the user will not be able to logout before signed into the game
 
 current stuff to do later-
 
-1. add rewards for enemy encounters (exp and loot)
+1. add rewards for enemy encounters (exp and coins)
 2. add levelup
 3. actually make the town 
 4. add inventory system
 
-actually inventory would go before loot giving?
+
 
 
 encounter-
@@ -24,36 +22,21 @@ add background
 
 
 town-
-temple- heals you for a fee off 2 coins per 1hp
+temple- heals you for a fee off 1 coins for 1hp
 equipment shop- sells various equipments to the inventory
 armourer- sells armor
 
 
 
 
-// need to oil the space bar, it squeeks
+inv system-
+all of inv is just unlockable items, while i change the equipped items according to the player's wants
+therefore 
+there will be no dupe items in the inventory which makes life easier for me to not make a sell feature
 
-
-
-
-
-ok wait
-DELETED the items table
-CHANGED EquippedItems table
-CHANGED equipment table 
-CHANGED inventory table | since all items now will be equipment and money, no need to keep track of every item if its equipment or not   
-
-
-
-wait so how will i handle loot tier?
-saving IDs 1 - X and X+1 - Y would pose an issue if i want to add more than X items to a tier
-so i will have to either add to them a tier
-which also helps the player understand how valuable it is!
-ok i think thats a good one
-should i add value?
-nah. the equipment would be unlockable, locked in ur inventory
-
-
-
+lets think about the encounter rewards system
+regarding EXP, i need to make 2 counters, 
+1. for mastery exp, goes up by a random amount after a succsessful hit IGNORES ARMOR (dmg +- 5) // i.e: if i dealt 15 damage, i will get random amount of exp from 10 to 20
+2. for hp exp, goes up by a random amount after GETTING hit IGNORES ARMOR (hp +-5)
 
 
