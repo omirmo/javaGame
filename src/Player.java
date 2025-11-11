@@ -155,16 +155,18 @@ public class Player {
                 System.out.println("===================weapon levelup!");
             }
         }
+        // update DB exp levels etc
         if(index==0){
             app.getDB().updateFieldByID(id, "playerStats", "maxHP", String.valueOf(maxHP));
-            System.out.println("levelup HP EXECUTED");
-            app.getDB().updateFieldByID(id, "playerExperiece", "hp", String.valueOf(experience.get(index)));
+            app.getDB().updateFieldByID(id, "playerExperience", "hp", String.valueOf(experience.get(index)));
             app.getDB().updateFieldByID(id, "expToNextLevel", "hp", String.valueOf(expToNextLevel.get(index)));
-            System.out.println("levelup HP FINISHED");
         }
-        app.getDB().updateFieldByID(id, "playerMasteries", getWeaponTypeUsed(), String.valueOf(masteries.get(index)));
-        app.getDB().updateFieldByID(id, "playerExperiece", getWeaponTypeUsed(), String.valueOf(experience.get(index)));
-        app.getDB().updateFieldByID(id, "expToNextLevel", getWeaponTypeUsed(), String.valueOf(expToNextLevel.get(index)));
+        else{
+            app.getDB().updateFieldByID(id, "playerMasteries", getWeaponTypeUsed(), String.valueOf(masteries.get(index)));
+            app.getDB().updateFieldByID(id, "playerExperience", getWeaponTypeUsed(), String.valueOf(experience.get(index)));
+            app.getDB().updateFieldByID(id, "expToNextLevel", getWeaponTypeUsed(), String.valueOf(expToNextLevel.get(index)));
+        }
+        
         return true;
     }
 
@@ -318,7 +320,6 @@ public class Player {
         for(int i=1; i< equipeditems.size(); i++){
             //skipping first field because its the player ID
             int itemID = (int)equipeditems.get(i);
-            System.out.println("current item is: " + itemID);
             if(itemID !=0 && i!=6){ 
                 
                 ArrayList<Object> itemStats = app.getDB().getEntry(itemID, "equipment"); 

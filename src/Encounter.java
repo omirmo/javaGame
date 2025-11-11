@@ -99,10 +99,10 @@ public class Encounter {
                   else{
                      rndNum= rndEnemy.nextInt(100)+1;
                      double dmg = eStr-pDef;
-                     hpExpCounter+=rndEnemy.nextInt((int)pStr-5,(int)pStr+5);
+                     hpExpCounter+=rndEnemy.nextInt((int)eStr-5,(int)eStr+5);
                      if(rndNum<eDex){
                         dmg = (eStr*1.5)-pDef;
-                        hpExpCounter+=rndEnemy.nextInt((int)pStr-5,(int)pStr+5);
+                        hpExpCounter+=rndEnemy.nextInt((int)eStr-5,(int)eStr+5);
                      }
                      if(dmg>0 || dmg<=0){
                         pHP = (pHP - (int)dmg);
@@ -126,23 +126,27 @@ public class Encounter {
    public synchronized void whoDed(){
       if(eHP<=0) 
       {
+         if(loopStopper!=0){
+            logMessage("-------------------------------------------------------------------------", 0);
+            logMessage("the player won!", loopStopper);
+            eHP=0;
+            pHP=p.getMaxHp();
+            System.out.println("hpExp- " + hpExpCounter + " || weaponExp- " + weaponExpCounter);
+            p.addExp("hp", hpExpCounter);
+            p.addExp(p.getWeaponTypeUsed(), weaponExpCounter);
+         }
          loopStopper = 1; // checks if player won
-         logMessage("-------------------------------------------------------------------------", 0);
-         logMessage("the player won!", loopStopper);
-         eHP=0;
-         pHP=p.getMaxHp();
-         p.addExp("hp", hpExpCounter);
-         p.addExp(p.getWeaponTypeUsed(), weaponExpCounter);
-
       }
       else {
          if(pHP<=0) // if not: checks if player lost
          { 
+            if(loopStopper!=0){
+               logMessage("-------------------------------------------------------------------------", 0);
+               logMessage("the enemy won...", loopStopper);
+               eHP=eMaxHp;
+               pHP=p.getMaxHp();
+            }
             loopStopper = -1;
-            logMessage("-------------------------------------------------------------------------", 0);
-            logMessage("the enemy won...", loopStopper);
-            eHP=eMaxHp;
-            pHP=p.getMaxHp();
          }
       }
    }
