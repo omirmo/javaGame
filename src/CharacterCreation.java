@@ -38,12 +38,12 @@ public class CharacterCreation{
                                      
                                      - choosing a class grants you 25% mastery exp boost for the class's prefered weapons.
                                      - it does not lock you away from using other weapons""");
-      info.setBounds(130,140,470,140);
+      info.setBounds(110,140,470,150);
       panel.add(info);
       info.setVisible(true);
 
       JLabel choice = new JLabel("so, which class would you decide?");
-      choice.setBounds(130,280,250,30); panel.add(choice); choice.setVisible(true);
+      choice.setBounds(135,280,250,30); panel.add(choice); choice.setVisible(true);
       JButton warrior = new JButton("WARRIOR"); warrior.setBounds(130,320,100,30); panel.add(warrior); warrior.setVisible(true);
       JButton ranger =  new JButton("RANGER");  ranger.setBounds(250,320,100,30);  panel.add(ranger);  ranger.setVisible(true);
       JButton wizard =    new JButton("WIZARD");    wizard.setBounds(370,320,100,30);    panel.add(wizard);    wizard.setVisible(true);
@@ -61,17 +61,20 @@ public class CharacterCreation{
       warrior.addActionListener(e -> {
          chosenClass="Warrior";
          playerIcon = new ImageIcon("lib/player_warrior.png");
+         playerPic.setIcon(playerIcon);
          choseC.setText("Chosen: Warrior");
          // set equipment as 1,0,0,0,0 for- weapon, + 4 armour pieces
       });
       ranger.addActionListener(e -> {
          chosenClass="Ranger";
          playerIcon = new ImageIcon("lib/player_ranger.png");
+         playerPic.setIcon(playerIcon);
          choseC.setText("Chosen: Ranger");
       });
       wizard.addActionListener(e -> {
          chosenClass="Wizard";
          playerIcon = new ImageIcon("lib/player_wizard.png");
+         playerPic.setIcon(playerIcon);
          choseC.setText("Chosen: Wizard");
       });
 
@@ -96,7 +99,7 @@ public class CharacterCreation{
 
    private Object[] newCharacter(int userID, String clas, App app){
       System.out.println("making an account for user:" + userID);
-      // data- id[0], maxHp[1], hp[2], class[3], masteries[4], exp[5], expToNextLevel[6] - length=7 [3 strings then 3 are arraylists!!!]
+      // data- id[0], maxHp[1], hp[2], class[3], masteries[4], exp[5], expToNextLevel[6] - length=7 [id, 3 strings then 3 are arraylists!!!]
       ArrayList<Integer> masteries = new ArrayList<>(); // masteries
       ArrayList<Integer> exp = new ArrayList<>(); //exp
       ArrayList<Integer> nextLvl = new ArrayList<>(); //nextLvl
@@ -124,19 +127,22 @@ public class CharacterCreation{
             for (int i = 1; i <= 3; i++) {
                masteries.set(i, 3);
             }
-            // TO DO - add inventory according to class
+            Object[] data2 = {userID,1};
+            app.getDB().addEntry("Inventory",data2);
          }
          case "Ranger" -> {
             for (int i = 4; i <= 6; i++) {
                masteries.set(i, 3);
             }
-            // TO DO - add inventory according to class
+            Object[] data2 = {userID,4};
+            app.getDB().addEntry("Inventory",data2);
          }
          case "Wizard" -> { 
             for (int i = 7; i <= 9; i++) {
                masteries.set(i, 3);
             }
-            // TO DO - add inventory according to class
+            Object[] data2 = {userID,7};
+            app.getDB().addEntry("Inventory",data2);
          }
          default -> {
             System.out.println("error, class isnt viable");

@@ -60,10 +60,10 @@ public class LoginPage {
                     }
                     else{
                         if(user.length()==0 || pass.length()==0){
-                            popupMessage("username and password can not be empty");
+                            popupMessage("Username and Password can not be empty");
                         }
                         else{ //both fields are full yet there was an error -> username is taken
-                            popupMessage("username already taken");
+                            popupMessage("Username already taken");
                         }
                     }
                 });
@@ -85,9 +85,8 @@ public class LoginPage {
                 System.out.println("user found! id:" + userID);
                 app.setID(userID);
                 int entryExists = app.getDB().doesEntryExist("playerStats",userID);
-                if(entryExists != -1){
-                    // there is NO entry is the players: go to character creation, where all tables would be filled accordingly
-                    if(entryExists==0) app.moveTo("CharacterCreation"); 
+                if(entryExists != -1){ // no error happened finding the user
+                    if(entryExists==0) app.moveTo("CharacterCreation");  // if character does not exist- send to make a new one
                     else{
                         // there IS an entry, therefore go to the location 
                         Player p = new Player(app, userID);

@@ -36,12 +36,12 @@ public class manageDB {
                 }
             }
             case "players" -> { 
-                // data- id[0], maxHp[1], hp[2], class[3], masteries[4], exp[5], expToNextLevel[6] - length=7 [3 strings then 3 are arraylists!!!]
+                // data- id[0], maxHp[1], hp[2], class[3], masteries[4], exp[5], expToNextLevel[6] - length=7 [id, 3 strings then 3 are arraylists!!!]
                 String newPlayerSql =         "INSERT INTO playerStats (id,maxHP,currentHP,class,location) VALUES(?,?,?,?,?)";
                 String newMasteriesSQL =      "INSERT INTO playerMasteries (id,swords,daggers,axes,bows,crossbows,firearms,tomes,staves,wands) VALUES(?,?,?,?,?,?,?,?,?,?)";
                 String newExpSQL =            "INSERT INTO playerExperience (id,hp,swords,daggers,axes,bows,crossbows,firearms,tomes,staves,wands) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
                 String newExpToNextLevelSQL = "INSERT INTO expToNextLevel (id,hp,swords,daggers,axes,bows,crossbows,firearms,tomes,staves,wands) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-                //String newPlayerEquipment = "INSERT INTO EquippedItems (id,weapon,helmet,chestplate,leggings,boots) VALUES(?,?,?,?,?,?)";
+                String newPlayerEquipment = "INSERT INTO EquippedItems (id,weapon,helmet,chestplate,leggings,boots, coins) VALUES(?,?,?,?,?,?,?)";
                 
                 System.out.println("SQL statements created");
                 // playerStats:
@@ -92,33 +92,45 @@ public class manageDB {
                     System.out.println("error when creating a nextLvl list: \n" + e.getMessage());
                     return false;
                 }
-                try(PreparedStatement equipmentSQL = conn.prepareStatement(newMasteriesSQL)) {
+                try(PreparedStatement equipmentSQL = conn.prepareStatement(newPlayerEquipment)) {
+                    equipmentSQL.setInt(1, (int)data[0]); // putting id in the equipment sql
                     if(data[3] instanceof String string){  // VSC "AI" helped changed it to a cool switch (the quick fix suggestions)
                         switch (string) {
-                            case "Warrior" -> equipmentSQL.setInt(2, 1);
-                            case "Ranger" -> equipmentSQL.setInt(2, 4);
-                            case "Wizard" -> equipmentSQL.setInt(2, 7);
+                            case "Warrior" -> {
+                                equipmentSQL.setInt(2, 1); // weapon
+                                
+                            }
+                            case "Ranger" -> {
+                                equipmentSQL.setInt(2, 4); // weapon
+                            }
+                            case "Wizard" -> {
+                                equipmentSQL.setInt(2, 7); // weapon
+                            }
                             default -> {
                             }
                         }
-                        equipmentSQL.setInt(3, 0);
-                        equipmentSQL.setInt(4, 0);
-                        equipmentSQL.setInt(5, 0);
-                        equipmentSQL.setInt(6, 0);
+                        equipmentSQL.setInt(3, 0); // helmet
+                        equipmentSQL.setInt(4, 0); // chestplate
+                        equipmentSQL.setInt(5, 0); // leggings
+                        equipmentSQL.setInt(6, 0); // boots
+                        equipmentSQL.setInt(7, 50); //coins - starting with 50 gold
                     }
-                    if(equipmentSQL.executeUpdate()!=0) System.out.println("New masteries added.");
+                    if(equipmentSQL.executeUpdate()!=0) System.out.println("New equipment added.");
                 } catch (SQLException e) {
-                    System.out.println("error when creating masteries list: \n" + e.getMessage());
+                    System.out.println("error when creating equipment list: \n" + e.getMessage());
                     return false;
                 }        
+
                 return true;
             }
+
+
             case "Inventory" -> {
                 // Inventory - id(userID), item(itemID)
                 String sql = "INSERT INTO " + tableName + "(id,item) VALUES(?,?)";
                 try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                    pstmt.setString(1, (String)data[0]);
-                    pstmt.setString(2, (String)data[1]);
+                    pstmt.setInt(1, (int)data[0]);
+                    pstmt.setInt(2, (int)data[1]);
                     pstmt.executeUpdate();
                     System.out.println("New item added to the player's inventory");
                     return true;
