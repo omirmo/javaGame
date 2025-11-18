@@ -12,7 +12,6 @@ public class Enemy {
    private final int strength;
    private final int accuracy;
    private final double attackSpeed;
-   private final int reward;
    private final int loot;
 
    //constructor
@@ -26,9 +25,8 @@ public class Enemy {
       agility=(int)data.get(4);
       accuracy=(int)data.get(5);
       strength=(int)data.get(6); 
-      reward = (int)data.get(7); //exp
-      loot = (int)data.get(8);
-      attackSpeed=(double)data.get(9);
+      loot = (int)data.get(7);
+      attackSpeed=(double)data.get(8);
    }
 
    public String getName() {return name;}
@@ -39,7 +37,6 @@ public class Enemy {
    public int getAcc() {return accuracy;}
    public int getStr() {return strength;}
    public double getHealthPercentage() {return (hp/maxHP*100);}
-   public int getReward() {return reward;}
    public int getLootLevel() {return loot;}
    public double getAttackSpeed() { return attackSpeed;}
 

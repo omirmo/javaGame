@@ -27,7 +27,7 @@ public class manageDB {
                     pstmt.setString(1, (String)data[0]);
                     pstmt.setString(2, (String)data[1]);
                     pstmt.executeUpdate();
-                    System.out.println("New entry added.");
+                    System.out.println("New user added.");
                     return true;
                 } 
                 catch (SQLException e) {
@@ -43,7 +43,7 @@ public class manageDB {
                 String newExpToNextLevelSQL = "INSERT INTO expToNextLevel (id,hp,swords,daggers,axes,bows,crossbows,firearms,tomes,staves,wands) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
                 String newPlayerEquipment = "INSERT INTO EquippedItems (id,weapon,helmet,chestplate,leggings,boots, coins) VALUES(?,?,?,?,?,?,?)";
                 
-                System.out.println("SQL statements created");
+                
                 // playerStats:
                 try(PreparedStatement playerSql = conn.prepareStatement(newPlayerSql)) {
                     playerSql.setInt(1, (Integer)data[0]);
@@ -267,7 +267,6 @@ public class manageDB {
             editTable.setString(1, data);
             editTable.setInt(2, playerId);
             editTable.executeUpdate();
-            System.out.println("updated " + tableName + " in field " + fieldName + " to val: " + data);
         } catch (SQLException e) {
             System.out.println("issue when editing field: " + e.getMessage());
         }
@@ -319,7 +318,6 @@ public class manageDB {
                 enemyData.add(enemyEntry.getObject("agi"));
                 enemyData.add(enemyEntry.getObject("accuracy"));
                 enemyData.add(enemyEntry.getObject("str"));
-                enemyData.add(enemyEntry.getObject("exp"));
                 enemyData.add(enemyEntry.getObject("lootTier"));
                 enemyData.add(enemyEntry.getObject("attackSpeed"));
             }

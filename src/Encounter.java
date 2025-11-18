@@ -141,12 +141,18 @@ public class Encounter {
             p.addExp("hp", hpExpCounter);
             p.addExp(p.getWeaponTypeUsed(), weaponExpCounter);
             int RL = en.getLootLevel();
+            logMessage("earned " + hpExpCounter + " endurance exp", 0);
+            logMessage("earned " + weaponExpCounter + " weapon exp", 0);
             Random rnd = new Random();
             if(RL==0){
-               p.updateMoney(rnd.nextInt(0, 5));
+               int finalLoot = rnd.nextInt(0, 5);
+               logMessage("earned " + finalLoot + " coins", 0);
+               p.updateMoney(finalLoot);
             }
             else{
-               p.updateMoney(rnd.nextInt(RL*2, RL*7)+5);
+               int finalLoot = rnd.nextInt(RL*2, RL*7)+5;
+               logMessage("earned " + finalLoot + " coins", 0);
+               p.updateMoney(finalLoot);
 
             }
          }
