@@ -267,6 +267,7 @@ public class manageDB {
             editTable.setString(1, data);
             editTable.setInt(2, playerId);
             editTable.executeUpdate();
+            System.out.println("updated " + tableName + " in field " + fieldName + " to val: " + data);
         } catch (SQLException e) {
             System.out.println("issue when editing field: " + e.getMessage());
         }

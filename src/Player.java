@@ -26,15 +26,15 @@ public class Player {
         this.id=id;
         this.app=app;
         ArrayList<Object> playerStats = app.getDB().getEntry(id, "playerStats");
-        this.clas = (String)playerStats.get(3);
-        this.loc = (String)playerStats.get(4);
         this.maxHP = (int)playerStats.get(1);
         this.hp = (int)playerStats.get(2);
+        this.clas = (String)playerStats.get(3);
+        this.loc = (String)playerStats.get(4);
 
 
         ArrayList<Object> mastery = app.getDB().getEntry(id, "playerMasteries");
         ArrayList<Integer> masteris = new ArrayList<>();
-        for(Object mas : mastery){ masteris.add((int)mas); }
+        for(Object mas : mastery){ masteris.add((int)mas); System.out.println(mas); }
         ArrayList<Object> experiences = app.getDB().getEntry(id, "playerExperience");
         ArrayList<Integer> exp = new ArrayList<>();
         for(Object xp : experiences){ exp.add((int)xp); }
@@ -61,7 +61,6 @@ public class Player {
     }
     //#endregion
 
-    
     public void updatePlayerDB(){ // NEED TO DO
 
     }
@@ -71,100 +70,87 @@ public class Player {
         double modifier=1;
         switch (mastery) {
             case "hp" -> {
-                index=0;
+                index=1;
             }
             case "swords"-> {
-                index=1;
-                if(clas.equals("Warrior")){
-                    modifier=1.25;
-                }
+                index=2;
+                if(clas.equals("Warrior")) { modifier=1.25; }
             }
             case "daggers"-> {
-                index=2;
-                if(clas.equals("Warrior")){
-                    modifier=1.25;
-                }
+                index=3;
+                if(clas.equals("Warrior")) { modifier=1.25; }
             }
             case "axes"-> {
-                index=3;
-                if(clas.equals("Warrior")){
-                    modifier=1.25;
-                }
+                index=4;
+                if(clas.equals("Warrior")) { modifier=1.25; }
             }
             case "bows"-> {
-                index=4;
-                if(clas.equals("Ranger")){
-                    modifier=1.25;
-                }
+                index=5;
+                if(clas.equals("Ranger")) { modifier=1.25; }
             }
             case "crossbows"-> {
-                index=5;
-                if(clas.equals("Ranger")){
-                    modifier=1.25;
-                }
+                index=6;
+                if(clas.equals("Ranger")) { modifier=1.25; }
             }
             case "firearms"-> {
-                index=6;
-                if(clas.equals("Ranger")){
-                    modifier=1.25;
-                }
+                index=7;
+                if(clas.equals("Ranger")) { modifier=1.25; }
             }
             case "tomes"-> {
-                index=7;
-                if(clas.equals("Wizard")){
-                    modifier=1.25;
-                }
+                index=8;
+                if(clas.equals("Wizard")) { modifier=1.25; }
             }
             case "staves"-> {
-                index=8;
-                if(clas.equals("Wizard")){
-                    modifier=1.25;
-                }
+                index=9;
+                if(clas.equals("Wizard")) { modifier=1.25; }
             }
             case "wands"-> {
-                index=9;
-                if(clas.equals("Wizard")){
-                    modifier=1.25;
-                }
+                index=10;
+                if(clas.equals("Wizard")) { modifier=1.25; }
             }
-            
             default -> {
-                index=-1;
+                System.out.println("error with index");
+                return false;
             }
         }
-        index++; // setting index one to the side in order to avoid changing ID, id=index[0] and not hp=index[0]
-        if(index!=-1){
-            experience.set(index, (int)((amount+experience.get(index))*modifier));
-        }
-        else{
-            System.out.println("error adding exp, field does not exist");
+        
+        if(index!=0){ // -1 if error, ++ which will result in 0
+            experience.set(index, (int)(((amount*modifier)+experience.get(index)))); // Xnew = A*mod + Xold
+        } else{
+            System.out.println("error adding exp to player ARR, index error probably");
             return false;
         }
 
         // check levelup-
         int expGap=experience.get(index)-expToNextLevel.get(index);
         if(expGap>=0){ //if there is MORE exp than needed to lvl up
-            experience.set(index,expGap);
-            expToNextLevel.set(index, (int)(expToNextLevel.get(index)*1.6));
-            if(index==0) { // hp levelup
+            
+            if(index==1) { // hp levelup
+                experience.set(index,expGap);
+                expToNextLevel.set(index, (int)(expToNextLevel.get(index)*2));
                 maxHP=maxHP+5;
-                System.out.println("===================HP levelup!");
+                System.out.println("===================HP levelup! \n from " + masteries.get(index) + " to " + (masteries.get(index)+1));
+                // heal player on lvlup
+                app.getDB().updateFieldByID(id, "playerStats", "currentHP", String.valueOf(maxHP));
             }
             else{ // weapon mastery levelup
-                masteries.set(index,masteries.get(index)+1);
-                System.out.println("===================weapon levelup!");
+                experience.set(index-1,expGap);
+                expToNextLevel.set(index-1, (int)(expToNextLevel.get(index-1)*1.6));
+                System.out.println("===================Weapon levelup! \n from " + masteries.get(index-1) + " to " + (masteries.get(index-1)+1));
+                masteries.set(index-1,(masteries.get(index-1)) +1);
+                
             }
-        }
-        // update DB exp levels etc
-        if(index==0){
+        }   
+        // update DB exp levels etc regardless of lvlup
+        if(index==1){ 
             app.getDB().updateFieldByID(id, "playerStats", "maxHP", String.valueOf(maxHP));
             app.getDB().updateFieldByID(id, "playerExperience", "hp", String.valueOf(experience.get(index)));
             app.getDB().updateFieldByID(id, "expToNextLevel", "hp", String.valueOf(expToNextLevel.get(index)));
         }
         else{
-            app.getDB().updateFieldByID(id, "playerMasteries", getWeaponTypeUsed(), String.valueOf(masteries.get(index)));
-            app.getDB().updateFieldByID(id, "playerExperience", getWeaponTypeUsed(), String.valueOf(experience.get(index)));
-            app.getDB().updateFieldByID(id, "expToNextLevel", getWeaponTypeUsed(), String.valueOf(expToNextLevel.get(index)));
+            app.getDB().updateFieldByID(id, "playerMasteries", getWeaponTypeUsed(), String.valueOf(masteries.get(index-1)));
+            app.getDB().updateFieldByID(id, "playerExperience", getWeaponTypeUsed(), String.valueOf(experience.get(index-1)));
+            app.getDB().updateFieldByID(id, "expToNextLevel", getWeaponTypeUsed(), String.valueOf(expToNextLevel.get(index-1)));
         }
         
         return true;

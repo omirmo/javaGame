@@ -12,13 +12,11 @@ current stuff to do later-
 3. actually make the town 
 4. add inventory system
 
-
-
-
 encounter-
 give exp and reward, update current HP according to the end of the battle
 add background
 
+have done- created a fully working EXP reward system
 
 
 town-

@@ -80,26 +80,26 @@ public class App {
             }
             case "CharacterCreation" -> { // will dispose login page in the login class, and then go here
                 new CharacterCreation(this);
-                DB.updateFieldByID(userID, "location", "playerStats", "CharacterCreation");
+                DB.updateFieldByID(userID, "playerStats", "location", "CharacterCreation");
             }
             case "Forest" -> {
                 player.changeLoc("Forest");
-                DB.updateFieldByID(userID, "location", "playerStats", "Forest");
+                DB.updateFieldByID(userID, "playerStats", "location", "Forest");
                 new Forest(this);
             }
             case "Village" -> {
                 player.changeLoc("Village");
-                DB.updateFieldByID(userID, "location", "playerStats", "Village");
+                DB.updateFieldByID(userID, "playerStats", "location", "Village");
                 new Town(this);
             }
             case "Desert" -> {
                 player.changeLoc("Desert");
-                DB.updateFieldByID(userID, "location", "playerStats", "Desert");
+                DB.updateFieldByID(userID, "playerStats", "location", "Desert");
                 //new Desert(this);
             }
             case "Mountain" -> {
                 player.changeLoc("Mountain");
-                DB.updateFieldByID(userID, "location", "playerStats", "Mountain");
+                DB.updateFieldByID(userID,  "playerStats", "location", "Mountain");
                 new Mountain(this);
             }
             // map so far: village <--> forest <--> mountains <--> desert

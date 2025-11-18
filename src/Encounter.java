@@ -74,6 +74,9 @@ public class Encounter {
                      }
                   }
                }
+               else{ // player DID miss
+                  logMessage(player.getName() + " attacked the " + enemy.getName() + " but missed ", 1);
+               }
                percent = ((double)eHP/(double)eMaxHp); 
                eHpBarFiller.setBounds(575, 350, (int)(168*percent) , 20);
                whoDed();
@@ -112,6 +115,9 @@ public class Encounter {
                      }
                   }
                }
+               else{ // enemy DID miss
+                  logMessage(enemy.getName() + " attacked the " + player.getName() + " but missed ", 2);
+               }
                percent = ((double)pHP/(double)p.getMaxHp()); 
                pHpBarFiller.setBounds(36, 350, (int)(168*percent) , 20);
                whoDed();
@@ -127,6 +133,7 @@ public class Encounter {
       if(eHP<=0) 
       {
          if(loopStopper!=0){
+            System.out.println("player wins remaining HP-   " + pHP);
             logMessage("-------------------------------------------------------------------------", 0);
             logMessage("the player won!", loopStopper);
             eHP=0;
@@ -141,6 +148,7 @@ public class Encounter {
          if(pHP<=0) // if not: checks if player lost
          { 
             if(loopStopper!=0){
+               System.out.println("enemy wins remaining HP-   " + eHP);
                logMessage("-------------------------------------------------------------------------", 0);
                logMessage("the enemy won...", loopStopper);
                eHP=eMaxHp;
@@ -163,8 +171,6 @@ public class Encounter {
          System.out.println("error with joining threads");
       }
 
-      if(loopStopper==1) {System.out.println("player wins remaining HP-   " + pHP);}
-      if(loopStopper==-1) {System.out.println("enemy wins remaining HP-   " + eHP);}
       return loopStopper; // my 1 or -1 which is being updates with every iteration of each thread
    }
 

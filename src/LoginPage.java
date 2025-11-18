@@ -91,6 +91,7 @@ public class LoginPage {
                         // there IS an entry, therefore go to the location 
                         Player p = new Player(app, userID);
                         app.setPlayer(p);
+                        System.out.println("pspsps");
                         String loc = (String)app.getDB().getEntryField(userID, "playerStats", "location");
                         System.out.println("moving to " + loc +"!");
                         app.moveTo(loc);
