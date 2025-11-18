@@ -12,7 +12,7 @@ public class CharacterCreation{
    public CharacterCreation(App app){
       chosenClass="";
       
-      //#region
+      //#region test
       Image bg = new ImageIcon("lib/character_background.png").getImage();
       JPanel panel = new JPanel() {
          @Override

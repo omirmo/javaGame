@@ -12,6 +12,7 @@ public class Player {
     private final ArrayList<Integer> masteries;
     private final ArrayList<Integer> experience;
     private final ArrayList<Integer> expToNextLevel;
+    private int moni;
     
     /* arraylist order: 
     masteries- id, swords, daggers, axes, bows, crossbows, firearms, tomes, staves, wands (id, and then 9 fields)
@@ -34,7 +35,7 @@ public class Player {
 
         ArrayList<Object> mastery = app.getDB().getEntry(id, "playerMasteries");
         ArrayList<Integer> masteris = new ArrayList<>();
-        for(Object mas : mastery){ masteris.add((int)mas); System.out.println(mas); }
+        for(Object mas : mastery){ masteris.add((int)mas); }
         ArrayList<Object> experiences = app.getDB().getEntry(id, "playerExperience");
         ArrayList<Integer> exp = new ArrayList<>();
         for(Object xp : experiences){ exp.add((int)xp); }
@@ -344,6 +345,18 @@ public class Player {
         return clas;
     }
 
-   
+   public boolean updateMoney(int a){
+    moni = (int)app.getDB().getEntryField(id, "EquippedItems", "coins");
+    
+    if(moni+a >=0){
+        moni = moni + a;
+        app.getDB().updateFieldByID(id, "EquippedItems", "coins",  String.valueOf(moni));
+        return true;
+    }
+    else{
+        return false;
+    }
+    
+   }
 
 }

@@ -7,15 +7,15 @@ import javax.swing.text.*;
 public class Encounter {
    private int pHP;
    private int eHP;
+   private final Player p;
+   private final Enemy en;
    private final Thread pThread;
    private final Thread eThread;
    private int loopStopper;
    private static JTextPane combatLog;
    private final App app;
-   private final Enemy en;
    private JPanel pHpBarFiller;
    private JPanel eHpBarFiller;
-   private final Player p;
    private int eMaxHp;
    private int weaponExpCounter=0;
    private int hpExpCounter=0;
@@ -138,9 +138,17 @@ public class Encounter {
             logMessage("the player won!", loopStopper);
             eHP=0;
             pHP=p.getMaxHp();
-            System.out.println("hpExp- " + hpExpCounter + " || weaponExp- " + weaponExpCounter);
             p.addExp("hp", hpExpCounter);
             p.addExp(p.getWeaponTypeUsed(), weaponExpCounter);
+            int RL = en.getLootLevel();
+            Random rnd = new Random();
+            if(RL==0){
+               p.updateMoney(rnd.nextInt(0, 5));
+            }
+            else{
+               p.updateMoney(rnd.nextInt(RL*2, RL*7)+5);
+
+            }
          }
          loopStopper = 1; // checks if player won
       }
