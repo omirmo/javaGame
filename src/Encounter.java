@@ -116,7 +116,7 @@ public class Encounter {
                   }
                }
                else{ // enemy DID miss
-                  logMessage(enemy.getName() + " attacked the " + player.getName() + " but missed ", 2);
+                  logMessage(enemy.getName() + " attacked " + player.getName() + " but missed ", -1);
                }
                percent = ((double)pHP/(double)p.getMaxHp()); 
                pHpBarFiller.setBounds(36, 350, (int)(168*percent) , 20);
@@ -161,7 +161,6 @@ public class Encounter {
 
    public int combatStart(){
       combatFrameFunc();
-      System.out.println("starting combat:");
       pThread.start();
       eThread.start();
       try {

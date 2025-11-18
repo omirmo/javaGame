@@ -129,14 +129,14 @@ public class Player {
                 experience.set(index,expGap);
                 expToNextLevel.set(index, (int)(expToNextLevel.get(index)*2));
                 maxHP=maxHP+5;
-                System.out.println("===================HP levelup! \n from " + masteries.get(index) + " to " + (masteries.get(index)+1));
+                System.out.println("===================HP levelup!");
                 // heal player on lvlup
                 app.getDB().updateFieldByID(id, "playerStats", "currentHP", String.valueOf(maxHP));
             }
             else{ // weapon mastery levelup
                 experience.set(index-1,expGap);
                 expToNextLevel.set(index-1, (int)(expToNextLevel.get(index-1)*1.6));
-                System.out.println("===================Weapon levelup! \n from " + masteries.get(index-1) + " to " + (masteries.get(index-1)+1));
+                System.out.println("===================Weapon levelup!");
                 masteries.set(index-1,(masteries.get(index-1)) +1);
                 
             }
