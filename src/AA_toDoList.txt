@@ -6,7 +6,7 @@ therefore the user will not be able to logout before signed into the game
 
 
 current stuff to do later-
-
+2. finish forest completly
 3. actually make the town temple (to heal)
 4. add inventory system
 5. make mountains (2 possible paths to explore)
@@ -16,15 +16,63 @@ current stuff to do later-
 9. finish game???! 
 
 
-town-
-temple- heals you for a fee off 1 coins for 1hp
-equipment shop- sells various equipments to the inventory
-armourer- sells armor
+
+2 explanation-
 
 
 
+3 explanation-
+make the Temple, a place in the village where you can heal up for the cost of 2 coins for 5 HP ? 
+implementation- 
+will be a popup window with a fancy UI, simply showing the player's HP and cost and "heal"
+the heal will heal for <amount of HP missing> or <all player money> if there isnt enough for a full heal
+how will be calculated- 
+maxHP - currentHP /5 *2 = cost to heal all wounds
+if (costFullHeal < currentCoins) { currentCoins/2 *5 = all the hp the player can afford}
+and that would be a simple button to do both, or of course a close button and not just an X at the corner
 
-finish game-
+
+4 explanation-
+add a button to the menuBar, will open a popup window which will let the player equip all of the items it has (all items are equipment)
+implementation-
+we will take all of the items the player owns, and display them with UI element
+to show the BOOTS- <equipped boots>
+PANTS- <equipped pants>
+CHEST, HEAD, WEAPON
+the player will be able to choose in a drop down menu what to equip (out of all unequipped items) 
+which will show it a "replace-X" and even a "changed stats" text wall
+by clicking yes, it will simply swap the 2 things
+must update DB equipped items to change the combat stats. also gotta make sure the inventory isnt accesible inside combat :thinking:
+
+
+5 explanation-
+Mountain area- similar to the forest but a bit more dangerous, need to design a backgroun and make 2 paths
+path 1- explore the tundra, will show mostly snow wolves and "hunted animals" - will never find boss
+path 2- explore the deep caves - will slowly show up a random enemy, but has the chance to find the boss
+implementation-
+overall the area is near the same as the forest in terms of code
+
+
+6 explanation-
+a shop in town that sells weapons
+implementation-
+will open a popup showing a few items on a shelf, under every item we will have the purchase button with the price tag
+when buying the item it'll be added to the inventory and thats it i guess while being able to open another popup 
+the popup will tell the player there is not enough money or that the item was bought succssesfully
+also of course we will display the amount of coins the player has in the corner
+
+
+7 explanation-
+Desert area, similar to the forest/
+path 1- searching for the oasis - will show random enemies
+path 2- diving into the desert temple
+
+
+8 explanation-
+armorer shop, similar to the weapon shop but sells armor, thats it really
+
+
+9 explanation- finish game-
 add a place called the dungeon(to the LEFT of the village) 
 will open up when you killed an enemy in each of the biomes. has the final boss and that is it!
 
@@ -37,6 +85,12 @@ there will be no dupe items in the inventory which makes life easier for me to n
 
 
 
-MAP- <unmaed> | finished | [WIP]
-<Dungeon> - [Village] - Forest - [Mountain] - <Desert> 
 
+
+
+
+
+
+
+MAP- <unmaed> | finished | [WIP]
+<Dungeon> - [Village] - [Forest] - [Mountain] - <Desert> 
