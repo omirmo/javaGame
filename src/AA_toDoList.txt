@@ -4,16 +4,15 @@ make sure that in the login and characterCreation pages i am NOT adding it
 therefore the user will not be able to logout before signed into the game
 
 
-
 current stuff to do later-
-2. finish forest completly
-3. actually make the town temple (to heal)
-4. add inventory system
-5. make mountains (2 possible paths to explore)
-6. make town shop 1
-7. make desert (2 possible paths to explore)
-8. make town shop 2
-9. finish game???! 
+2. finish forest completly (add notif for reward)
+3. make the town temple (to heal and revive, and praying which will earn XP in a random stat)
+4. add inventory system for equipping items
+5. make mountains (2 possible paths to explore: traveled path(easy enemies), old path(harder enemies and the area boss))
+6. make town shop 1 (weapons)
+7. make desert (2 possible paths to explore: i dont know yet. but they will be similar to mountains)
+8. make town shop 2 (armors)
+9. make dungeon (final area in the game, unlocks after killing all bosses. has all enemies apart from the bosses + new enemies, after killing 10 in a row the boss will appear)
 
 
 

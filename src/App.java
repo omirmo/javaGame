@@ -63,8 +63,6 @@ public class App {
         
         
         
-        
-        
         frame.setJMenuBar(menuBar);
         frame.setSize(new Dimension(1200,675));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

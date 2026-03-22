@@ -6,6 +6,7 @@ import javax.swing.*;
 public class Forest {
    private int loopStopper;
    private App app;
+   private boolean isExploring;
 
    public Forest(App ap){
       app = ap;
@@ -37,14 +38,13 @@ public class Forest {
       travelMountain.addActionListener(e -> moveTo("Mountain", app));
       
       JButton explore= new JButton("<html><div style='text-align:center;'>EXPLORE<br></div></html>"); 
-      explore.setBounds(513,313,70,30);panel.add(explore);explore.setVisible(true);
+      explore.setBounds(513,313,85,30);panel.add(explore);explore.setVisible(true);
       explore.setMargin(new Insets(2, 2, 2, 2));
       explore.addActionListener(e -> explore(app, explore));
       
       
       app.changePanel(panel);
-
-
+     
       
    }
 
@@ -53,20 +53,11 @@ public class Forest {
    }
 
    public void explore(App app, JButton btn){
-      
-      System.out.println("started exploring");
-      if(loopStopper==0){ 
-         // if its 0 (turned off) then make it 1 and turn the thread on, if its already at 1 then make it 0 (turn it off)
-         loopStopper=1;
-      } else{
-         loopStopper=0;
-      }
-      Thread explorationThread = new Thread(() -> 
-      {
+      Thread explorationThread = new Thread(() -> {
          try {
             int rndNum;
             Random rnd = new Random();
-            btn.setText("Exploring");
+            btn.setText("<html><div style='text-align:center;'>EXPLORING<br></div></html>");
             while(loopStopper==1){
                Thread.sleep(1000);
                rndNum= rnd.nextInt(100)+1; //between 1 and 100, instead of 0 to 99
@@ -88,9 +79,9 @@ public class Forest {
                      }
                   }
                   else{
-                     System.out.println("legendary item! 1 in 50!");
-                     // simply give the player an item, i think a popup might be good? also create the legendary item
-                     // can make it the master sword from zelda xD 
+                     System.out.println("legendary find! 1 in 50!");
+                     int finalLoot = rnd.nextInt(0, 50)+100;
+                     app.getPlayer().updateMoney(finalLoot);
                   }
                }
                else{
@@ -104,7 +95,6 @@ public class Forest {
                      System.out.println("STARTING FIGHT:");
                      Encounter a = new Encounter(app, app.getPlayer(), tempEnemy);
                      int won = a.combatStart();
-                     
                      if(won==1){
                         System.out.println("in the forst, you won!");
                      }
@@ -114,8 +104,9 @@ public class Forest {
                   }
                   else{
                      if(rndNum>=39){
-                        System.out.println("found item! 1 in 4!");
-                        // give random ass item that is NOT legendary. if picked legendary than give NOTHING, the item named "nothing"
+                        System.out.println("found coin! 1 in 4!");
+                        int finalLoot = rnd.nextInt(1, 5);
+                        app.getPlayer().updateMoney(finalLoot);
                      }
                   }
                }
@@ -124,11 +115,18 @@ public class Forest {
             System.out.println("error in exploration thread");
          }
       });   
-      
-      explorationThread.start();
-      System.err.println("thread started");
+      System.out.println("started exploring");
+      if(loopStopper==0){ 
+         // if its 0 (turned off) then make it 1 and turn the thread on, if its already at 1 then make it 0 (turn it off)
+         loopStopper=1;
+         if(explorationThread.isAlive()!=true){
+            explorationThread.start();
+         }
+         System.err.println("thread started");
+      } else{
+         // turn off-
+         loopStopper=0;
+         btn.setText("<html><div style='text-align:center;'>EXPLORE<br></div></html>");
+      }
    }
-   
-
-   
 }

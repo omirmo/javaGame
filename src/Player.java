@@ -248,7 +248,8 @@ public class Player {
     }
 
     public double getAccStat(String weaponType){
-        double acc;
+        
+        double acc=0;
         switch (weaponType) {
             case "swords"-> {
                 acc= 3*masteries.get(1);
@@ -279,14 +280,17 @@ public class Player {
             }
             
             default -> {
+                
                 return 0;
             } 
         }
         if(acc+25 > 100){
+            
             return 100;
         }
         else{
-            return acc+25;
+            
+            return (acc+25);
         }
     }
 

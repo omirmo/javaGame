@@ -18,7 +18,7 @@ public class manageDB {
         }
     }
 
-    public boolean addEntry(String tableName, Object[] data){ // used AI in this function :(
+    public boolean addEntry(String tableName, Object[] data){ // MADE BY AI: used AI in this function :(
         switch(tableName){
             case "users" -> {
                 // user - ID, username, password
@@ -233,7 +233,7 @@ public class manageDB {
     /**
      * returns ONE entry of a given table name and ID
      */
-    public ArrayList<Object> getEntry(int id, String tableName){ // used AI in this function :( 
+    public ArrayList<Object> getEntry(int id, String tableName){ // MADE BY AI: used AI in this function as well :( 
         try {
             String sql = "SELECT * FROM " + tableName + " WHERE id = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);

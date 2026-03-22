@@ -42,6 +42,8 @@ public class Encounter {
       pDef = playerStats.get(1); pDex = playerStats.get(2); pAgi = playerStats.get(3); pAcc = playerStats.get(4); pStr = playerStats.get(5); pAtkSpd = playerStats.get(6);
       eDef = enemyStats.get(1);  eDex = enemyStats.get(2);  eAgi = enemyStats.get(3);  eAcc = enemyStats.get(4);  eStr = enemyStats.get(5);  eAtkSpd = enemyStats.get(6);
       
+      System.out.println("p acc:");
+      System.out.println(pAcc);
 
       pThread = new Thread(() -> {
          try {
@@ -53,7 +55,7 @@ public class Encounter {
             while(loopStopper==0){
                Thread.sleep(threadSpeed);
                rndNum= rndPlayer.nextInt(100)+1; //between 1 and 100, instead of 0 to 99
-               if(rndNum>pAcc){ // PLAYER DID NOT MISS
+               if(rndNum<=pAcc){ // PLAYER DID NOT MISS
                   rndNum= rndPlayer.nextInt(100)+1;
                   if(rndNum<eAgi){ // example: agi is 3%, rng hits 2, so 2 < 3 therefore the rare 3% chance happened and he evaded
                   }
@@ -294,7 +296,7 @@ public class Encounter {
       frame.repaint();
    }
 
-   // MADE BY AI :( felt lazy 
+   // MADE BY AI: felt lazy... :( 
    public static void logMessage(String message, int attacker) { 
       StyledDocument doc = combatLog.getStyledDocument();
       SimpleAttributeSet attr = new SimpleAttributeSet();
