@@ -10,7 +10,6 @@ public class App {
     public App(){
         frame = new JFrame();
         JMenuBar menuBar = new JMenuBar();
-
         
         JMenu subMenu = new JMenu("GameActions");
         JMenu subLogOut = new JMenu("LogOut");
@@ -77,8 +76,8 @@ public class App {
                 new LoginPage(this);
             }
             case "CharacterCreation" -> { // will dispose login page in the login class, and then go here
-                new CharacterCreation(this);
                 DB.updateFieldByID(userID, "playerStats", "location", "CharacterCreation");
+                new CharacterCreation(this);
             }
             case "Forest" -> {
                 player.changeLoc("Forest");

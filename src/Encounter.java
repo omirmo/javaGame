@@ -5,6 +5,7 @@ import javax.swing.*;
 import javax.swing.text.*;
 
 public class Encounter {
+   private JLabel lootLabel;
    private int pHP;
    private int eHP;
    private final Player p;
@@ -154,6 +155,8 @@ public class Encounter {
             else{
                int finalLoot = rnd.nextInt(RL*2, RL*7)+5;
                logMessage("earned " + finalLoot + " coins", 0);
+               String lootMessage = "Earned " + String.valueOf(finalLoot) + " coins";
+               showNotif(lootMessage);
                p.updateMoney(finalLoot);
 
             }
@@ -190,13 +193,38 @@ public class Encounter {
    }
 
    public void combatFrameFunc(){ 
-      JFrame frame = new JFrame("combat");
-
+      // i hate how i made the background, but its the only idea i had
+      Image bg;
+      String loc = app.getPlayer().getLoc();
+      switch (loc) {
+         case "Forest"   -> bg = new ImageIcon("lib/forest_background.png").getImage();
+         case "Mountain" -> bg = new ImageIcon("lib/mountain_background.png").getImage();
+         case "Desert"   -> bg = new ImageIcon("lib/desert_background.png").getImage();
+         case "Dungeon"  -> bg = new ImageIcon("lib/dungeon_background.png").getImage();
+         default -> {
+            bg = new ImageIcon("lib/login_background.png").getImage();
+         }
+      }
+      
+      JFrame frame = new JFrame("combat");   
+      JPanel bgPanel = new JPanel() {
+         @Override
+         protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
+         }
+      };
       frame.setSize(new Dimension(800,450));
-      frame.setVisible(true);
       frame.setResizable(false);
       frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
-      frame.setLayout(null);
+      bgPanel.setLayout(null);
+
+      JLabel LL = new JLabel("");
+      LL.setVisible(true); frame.add(LL);
+      LL.setBounds(513,15,85,30);
+      lootLabel=LL;
+
+
       // player and enemy pictures
       // how will i change pictures according to class and enemy? UHHH idk.... thats for future omri!
       String klass = p.getKlass();
@@ -206,22 +234,21 @@ public class Encounter {
          case "Ranger" -> playerIcon = new ImageIcon("lib/player_ranger.png");
          case "Wizard" -> playerIcon = new ImageIcon("lib/player_wizard.png");
          default -> {
-            playerIcon = new ImageIcon("lib/player_temp.png");
+            playerIcon = new ImageIcon("lib/player_temp.png");         
          }
       }
       JLabel playerPic = new JLabel(playerIcon); playerPic.setBounds(30,50,180,300);
-      frame.add(playerPic); playerPic.setVisible(true);
+      bgPanel.add(playerPic); 
       ImageIcon enemyIcon = new ImageIcon("lib/enemy_temp.png");
       JLabel enemyPic = new JLabel(enemyIcon); enemyPic.setBounds(570,50,180,300);
-      frame.add(enemyPic); enemyPic.setVisible(true);
-
+      bgPanel.add(enemyPic); 
       // ===== titles
       JLabel pName = new JLabel("<html><div style='text-align:center;'>" + app.getPlayer().getName() + "</div></html>");
       JLabel eName = new JLabel("<html><div style='text-align:center;'>" + en.getName() + "</div></html>");
       pName.setBounds(35, 20, 180, 30);
       eName.setBounds(575, 20, 180, 30);
-      frame.add(pName); pName.setVisible(true);
-      frame.add(eName); eName.setVisible(true);
+      bgPanel.add(pName); 
+      bgPanel.add(eName); 
       // enemy health bar
       JPanel pHpBarFrame = new JPanel() {
          @Override
@@ -234,9 +261,8 @@ public class Encounter {
          }
       };
       pHpBarFrame.setBounds(36, 350, 168 , 20);
-      frame.add(pHpBarFrame); pHpBarFrame.setOpaque(false);
-      pHpBarFrame.setVisible(true);
-      double percent = (pHP/p.getMaxHp());
+      bgPanel.add(pHpBarFrame); pHpBarFrame.setOpaque(false);   
+      double percent = ((double)pHP/p.getMaxHp());
       pHpBarFiller = new JPanel() {
          @Override
          protected void paintComponent(Graphics g) {
@@ -248,10 +274,7 @@ public class Encounter {
          }
       };
       pHpBarFiller.setBounds(36, 350, (int)(168*percent) , 20);
-      frame.add(pHpBarFiller); pHpBarFiller.setOpaque(false);
-      pHpBarFiller.setVisible(true);
-      
-
+      bgPanel.add(pHpBarFiller); pHpBarFiller.setOpaque(false);
       // enemy health bar
       JPanel eHpBarFrame = new JPanel() {
          @Override
@@ -264,8 +287,7 @@ public class Encounter {
          }
       };
       eHpBarFrame.setBounds(575, 350, 168 , 20);
-      frame.add(eHpBarFrame); eHpBarFrame.setOpaque(false);
-      eHpBarFrame.setVisible(true);
+      bgPanel.add(eHpBarFrame); eHpBarFrame.setOpaque(false);   
       double epercent = 1;
       eHpBarFiller = new JPanel() {
          @Override
@@ -278,9 +300,7 @@ public class Encounter {
          }
       };
       eHpBarFiller.setBounds(575, 350, (int)(168*epercent) , 20);
-      frame.add(eHpBarFiller); eHpBarFiller.setOpaque(false);
-      eHpBarFiller.setVisible(true);
-      
+      bgPanel.add(eHpBarFiller); eHpBarFiller.setOpaque(false);      
       // ===== text wall in the middle
       // use the private variable combatLog to hopefully be 
       // able to get text from the threads into the text area??? just an idea though
@@ -288,13 +308,13 @@ public class Encounter {
       combatLog.setEditable(false); // optional but recommended
       JScrollPane scrollPane = new JScrollPane(combatLog);
       scrollPane.setBounds(230,50, 320,300);
-      frame.add(scrollPane);
-      
-
+      bgPanel.add(scrollPane);   
+      frame.setContentPane(bgPanel);
       frame.setVisible(true);
       frame.revalidate();
       frame.repaint();
    }
+
 
    // MADE BY AI: felt lazy... :( 
    public static void logMessage(String message, int attacker) { 
@@ -312,4 +332,16 @@ public class Encounter {
          System.out.println("error logging message into combatLog");
       }
    }
-} // 168 x 300
+   // copied the notif function from forest into encounter, will display the loot in a more noticable fashion
+   public void showNotif(String msg){  
+      SwingUtilities.invokeLater(()->{
+         lootLabel.setText(msg);
+         javax.swing.Timer timer= new javax.swing.Timer(2000, e->{
+            lootLabel.setText("");
+         });
+
+         timer.setRepeats(false);
+         timer.start();
+      });
+   }
+} 

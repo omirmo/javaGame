@@ -248,7 +248,6 @@ public class Player {
     }
 
     public double getAccStat(String weaponType){
-        
         double acc=0;
         switch (weaponType) {
             case "swords"-> {

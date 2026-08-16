@@ -6,7 +6,7 @@ import javax.swing.*;
 public class Forest {
    private int loopStopper;
    private App app;
-   private boolean isExploring;
+   private JLabel lootLabel;
 
    public Forest(App ap){
       app = ap;
@@ -37,6 +37,12 @@ public class Forest {
       travelMountain.setMargin(new Insets(2, 3, 2, 3));
       travelMountain.addActionListener(e -> moveTo("Mountain", app));
       
+      JLabel LL = new JLabel("");
+      LL.setVisible(true); panel.add(LL);
+      LL.setBounds(513,15,85,30);
+      lootLabel=LL;
+
+      
       JButton explore= new JButton("<html><div style='text-align:center;'>EXPLORE<br></div></html>"); 
       explore.setBounds(513,313,85,30);panel.add(explore);explore.setVisible(true);
       explore.setMargin(new Insets(2, 2, 2, 2));
@@ -44,8 +50,6 @@ public class Forest {
       
       
       app.changePanel(panel);
-     
-      
    }
 
    public void moveTo(String loc, App app){
@@ -62,7 +66,7 @@ public class Forest {
                Thread.sleep(1000);
                rndNum= rnd.nextInt(100)+1; //between 1 and 100, instead of 0 to 99
                if(rndNum>=97){
-                  // legendary item or boss, half and half
+                  // legendary loot or boss, half and half
                   if(rndNum%2 ==0){
                      System.out.println("enemy boss! 1 in 50!");
                      // forest boss - enemy ID 6
@@ -104,8 +108,10 @@ public class Forest {
                   }
                   else{
                      if(rndNum>=39){
-                        System.out.println("found coin! 1 in 4!");
+                        System.out.println("found coin!");
                         int finalLoot = rnd.nextInt(1, 5);
+                        String lootMessage = "Earned " + String.valueOf(finalLoot) + " coins";
+                        showNotif(lootMessage);
                         app.getPlayer().updateMoney(finalLoot);
                      }
                   }
@@ -128,5 +134,17 @@ public class Forest {
          loopStopper=0;
          btn.setText("<html><div style='text-align:center;'>EXPLORE<br></div></html>");
       }
+   }
+
+   public void showNotif(String msg){  
+      SwingUtilities.invokeLater(()->{
+         lootLabel.setText(msg);
+         javax.swing.Timer timer= new javax.swing.Timer(2000, e->{
+            lootLabel.setText("");
+         });
+
+         timer.setRepeats(false);
+         timer.start();
+      });
    }
 }

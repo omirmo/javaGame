@@ -12,7 +12,7 @@ public class Mountain {
       System.out.println("we are in the forest now!");
       loopStopper=0;
 
-      Image bg = new ImageIcon("lib/forest_background.png").getImage();
+      Image bg = new ImageIcon("lib/mountain_background.png").getImage();
       JPanel panel = new JPanel() 
       {
          @Override
@@ -32,15 +32,11 @@ public class Mountain {
       travelForest.setMargin(new Insets(2, 3, 2, 3));
       travelForest.addActionListener(e -> moveTo("Forest", app));
       
-      // JButton travelMountain= new JButton("<html><div style='text-align:center;'>TRAVEL TO<br>MOUNTAINS</div></html>"); 
-      // travelMountain.setBounds(1060,530,90,50);panel.add(travelMountain);travelMountain.setVisible(true);
-      // travelMountain.setMargin(new Insets(2, 3, 2, 3));
-      // travelMountain.addActionListener(e -> moveTo("Mountain", app));
       
-      // JButton explore= new JButton("<html><div style='text-align:center;'>EXPLORE<br></div></html>"); 
-      // explore.setBounds(513,313,70,30);panel.add(explore);explore.setVisible(true);
-      // explore.setMargin(new Insets(2, 2, 2, 2));
-      // explore.addActionListener(e -> explore(app, explore));
+      JButton explore= new JButton("<html><div style='text-align:center;'>EXPLORE<br></div></html>"); 
+      explore.setBounds(513,313,70,30);panel.add(explore);explore.setVisible(true);
+      explore.setMargin(new Insets(2, 2, 2, 2));
+      explore.addActionListener(e -> explore(app, explore));
       
       
       
@@ -53,9 +49,6 @@ public class Mountain {
       
       
       app.changePanel(panel);
-
-
-      
    }
 
    public void moveTo(String loc, App app){
